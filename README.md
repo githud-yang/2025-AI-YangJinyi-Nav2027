@@ -100,12 +100,18 @@ ros2 run daohang daohang.cpp
 
 ## 四、Git / GitHub 使用记录
 
-1. `git init` 初始化仓库。
-2. `git add`、`git commit` 记录考核代码和本报告。
-3. GitHub 上新建 **Public** 仓库，本地 `git remote add origin <仓库地址>`。
-4. `git branch -M main` 后 `git push -u origin main`。
+GitHub 账号：`githud-yang`。仓库设为 **Public**，本文件就是考核要求的研究报告。
 
-之后只要改完代码再 add、commit、push，别人打开本仓库就能按 README 复现。
+```bash
+git init
+git add exam1 exam2 README.md .gitignore
+git commit -m "完成2027导航组第一次面试考核，并整理可复现环境说明。"
+git branch -M main
+git remote add origin https://github.com/githud-yang/2025-人工智能-杨锦毅-导航组2027考核题.git
+git push -u origin main
+```
+
+换电脑后：先 `git clone` 上述地址，再按第一节配置 ROS 2 环境即可复现。
 
 ---
 
