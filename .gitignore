@@ -1,0 +1,12 @@
+*.o
+q1
+q2
+q3
+q1.exe
+q2.exe
+q3.exe
+build/
+install/
+log/
+.vscode/
+.idea/
