@@ -75,7 +75,7 @@ g++ -std=c++17 -o q1 exam1/第一题_升序.cpp
 
 ## 三、考核二：ROS 2 编译与运行
 
-官方附件 `src.zip` 解压到工作空间后，包名是 `daohang`，可执行文件名是 `daohang.cpp`。节点本身每 0.5 秒打印一句考核文字，用来检查工作空间、colcon 和环境变量有没有配好。
+官方附件 `src.zip` 解压到工作空间后，包名是 `daohang`，可执行程序名是 `daohang.cpp`。该程序每 0.5 秒打印一句考核文字，用来检查工作空间、colcon 和环境变量有没有配好。需要注意，这份附件没有使用 `rclcpp::Node` 创建 ROS 2 节点，因此它是由 `ros2 run` 启动的可执行程序，不会出现在 `ros2 node list` 中。
 
 ```bash
 cd ~/nav_ws
@@ -92,7 +92,7 @@ ros2 run daohang daohang.cpp
 | 概念 | 这次实际用到的 |
 | --- | --- |
 | 功能包 | `daohang`（`package.xml` + `CMakeLists.txt`） |
-| 节点 / 可执行文件 | `daohang.cpp` |
+| 可执行程序 | `daohang.cpp`（未创建 `rclcpp::Node`） |
 | 构建 | `colcon` + `ament_cmake` |
 | 环境 | `source /opt/ros/jazzy/setup.bash` 再 `source install/setup.bash` |
 
