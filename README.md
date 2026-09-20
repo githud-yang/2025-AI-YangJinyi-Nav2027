@@ -107,7 +107,7 @@ git init
 git add exam1 exam2 README.md .gitignore
 git commit -m "完成2027导航组第一次面试考核，并整理可复现环境说明。"
 git branch -M main
-git remote add origin https://github.com/githud-yang/2025-人工智能-杨锦毅-导航组2027考核题.git
+git remote add origin https://github.com/githud-yang/2025-AI-YangJinyi-Nav2027.git
 git push -u origin main
 ```
 
