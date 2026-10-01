@@ -9,6 +9,7 @@ Web 应用（FastAPI）—— 题目要求的接入形式
     pip install fastapi "uvicorn[standard]" httpx
     uvicorn server:app --reload --port 8000
 """
+import subprocess
 import sys
 from pathlib import Path
 
@@ -91,6 +92,20 @@ def gen_frames():
             )
     finally:
         cap.release()
+
+
+@app.post("/yolo/start")
+def yolo_start():
+    """在网页上点击按钮，后端用 yolo conda 环境拉起摄像头检测窗口。"""
+    yolo_script = BASE.parent / "yolo" / "detect_realtime.py"
+    try:
+        subprocess.Popen(
+            ["conda", "run", "-n", "yolo", "python", str(yolo_script)],
+            cwd=str(BASE.parent),
+        )
+        return {"ok": True, "msg": "已启动摄像头检测窗口，按 q 退出"}
+    except Exception as e:  # noqa: BLE001
+        return {"ok": False, "msg": str(e)}
 
 
 @app.get("/yolo/stream")
