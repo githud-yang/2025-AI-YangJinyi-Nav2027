@@ -13,7 +13,13 @@
   </header>
   <main class="center">
     <p class="tip">摄像头画面经本地 YOLO 推理后叠加检测框（首次加载需授权摄像头）</p>
-    <img src="/yolo/stream" alt="YOLO stream" style="max-width:100%;border-radius:12px;" />
+    <img src="/yolo/stream" alt="YOLO stream" style="max-width:100%;border-radius:12px;display:none;"
+         onerror="this.style.display='none';document.getElementById('yolo-fallback').style.display='block';" />
+    <div id="yolo-fallback" style="display:none;border:1px dashed #2a2f55;border-radius:12px;padding:40px;color:#8a90c9;">
+      <p>📷 实时检测画面未加载</p>
+      <p style="margin-top:10px;font-size:13px;">请在另一个终端启动 YOLO 推理：</p>
+      <p style="margin-top:6px;font-family:monospace;color:#7fd4ff;">conda activate yolo<br/>python yolo/detect_realtime.py</p>
+    </div>
   </main>
 </body>
 </html>

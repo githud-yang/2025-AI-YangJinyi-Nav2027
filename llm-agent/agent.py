@@ -1,5 +1,5 @@
 """
-萤火 · 本地/云端智能体（LLM Agent）
+大冒险 · 本地/云端智能体（LLM Agent）
 ====================================
 一个文件同时支持两种模型后端，按同目录 .env 的 LLM_PROVIDER 自动切换：
   - ollama   ：本机本地大模型，无需 key（题目要求的本地部署）
@@ -106,7 +106,7 @@ class LocalLLMAgent:
         self.api_key = cfg["api_key"]
         self.provider = os.getenv("LLM_PROVIDER", "ollama").lower()
         self.system_prompt = (
-            "你是「萤火」助手。能调用本地工具时优先调用工具，不要编造时间或计算结果。"
+            "你是「大冒险」游戏主持人。能调用本地工具时优先调用工具，不要编造时间或计算结果。"
             "回答简洁、中文。"
         )
 
@@ -149,7 +149,7 @@ class LocalLLMAgent:
 
 if __name__ == "__main__":
     agent = LocalLLMAgent()
-    print(f"萤火已启动 | provider={agent.provider} | model={agent.model}")
+    print(f"大冒险已启动 | provider={agent.provider} | model={agent.model}")
     while True:
         q = input("\n你：").strip()
         if q.lower() in {"exit", "quit", "退出"}:

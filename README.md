@@ -1,4 +1,4 @@
-# 萤火 · AIU 创智部二面实战项目
+# 大冒险 · AIU 创智部二面实战项目
 
 > 一台 RTX 5070（8GB 显存）笔记本上，把「本地大模型 + 智能体 + YOLO + 一个能玩的网页游戏」全部跑通的综合项目。
 >
@@ -13,7 +13,7 @@
 | 二、YOLO 训练 | ✅ ultralytics 一次完整训练（coco8，mAP50=0.858） | [yolo/train.py](yolo/train.py) |
 | 二、YOLO 实时推理 + 接入 Web | ✅ 摄像头实时检测，网页视频流 | [yolo/detect_realtime.py](yolo/detect_realtime.py)、[webapp/](webapp/) |
 | 三、硬件结合 | ⏭️ 无单片机硬件，本次跳过（见工程日志说明） | — |
-| 五、创意作品 | ✅ **萤火·AI 文字冒险网页游戏**，由大模型实时生成剧情 | [webapp/static/index.html](webapp/static/index.html) |
+| 五、创意作品 | ✅ **大冒险·AI 文字冒险网页游戏**，由大模型实时生成剧情 | [webapp/static/index.html](webapp/static/index.html) |
 | 工程规范 | ✅ 干净目录 / README / 工程日志 / Git 提交 | 本仓库 |
 
 ## 整体思路（面试官关心的不是代码细节，是思路）
