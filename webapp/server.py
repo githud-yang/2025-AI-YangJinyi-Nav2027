@@ -94,16 +94,38 @@ def gen_frames():
         cap.release()
 
 
+yolo_proc = None  # 记录当前 YOLO 检测进程
+
+
 @app.post("/yolo/start")
 def yolo_start():
     """在网页上点击按钮，后端用 yolo conda 环境拉起摄像头检测窗口。"""
+    global yolo_proc
     yolo_script = BASE.parent / "yolo" / "detect_realtime.py"
     try:
-        subprocess.Popen(
+        # 先关掉之前可能还在跑的
+        if yolo_proc is not None:
+            subprocess.run(["taskkill", "/PID", str(yolo_proc.pid), "/T", "/F"],
+                           capture_output=True)
+        yolo_proc = subprocess.Popen(
             ["conda", "run", "-n", "yolo", "python", str(yolo_script)],
             cwd=str(BASE.parent),
         )
-        return {"ok": True, "msg": "已启动摄像头检测窗口，按 q 退出"}
+        return {"ok": True, "msg": "已启动摄像头检测窗口，点下方按钮可停止"}
+    except Exception as e:  # noqa: BLE001
+        return {"ok": False, "msg": str(e)}
+
+
+@app.post("/yolo/stop")
+def yolo_stop():
+    global yolo_proc
+    if yolo_proc is None:
+        return {"ok": True, "msg": "当前没有运行中的检测"}
+    try:
+        subprocess.run(["taskkill", "/PID", str(yolo_proc.pid), "/T", "/F"],
+                       capture_output=True)
+        yolo_proc = None
+        return {"ok": True, "msg": "已停止检测"}
     except Exception as e:  # noqa: BLE001
         return {"ok": False, "msg": str(e)}
 
