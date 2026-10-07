@@ -18,7 +18,7 @@ source /opt/ros/jazzy/setup.bash
 3. 自己的工作空间还要再 source 一次，否则 `ros2 run` / `ros2 launch` 找不到包。可以写进 `~/.bashrc`，也可以每次手动执行：
 
 ```bash
-cd ~/nav_ws
+cd /你的仓库路径/exam2
 source ./install/setup.bash
 ```
 
@@ -28,7 +28,14 @@ source ./install/setup.bash
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 ```
 
-之后同一工作空间再编译，直接 `colcon build` 即可。`--symlink-install` 会把脚本做成符号链接，改 Python/launch 后不用每次重装。
+之后同一工作空间再编译，直接 `colcon build` 即可。`--symlink-install` 可对支持的安装文件使用符号链接；修改 C++ 源码仍需重新构建。本仓库附件没有 Python 或 launch 文件。
+
+新电脑的完整起步流程如下。后面的 C++ 命令在仓库根目录执行，ROS 命令在 `exam2` 中执行：
+
+```bash
+git clone https://github.com/githud-yang/2025-AI-YangJinyi-Nav2027.git
+cd 2025-AI-YangJinyi-Nav2027
+```
 
 ---
 
@@ -55,7 +62,13 @@ g++ -std=c++17 -o q1 exam1/第一题_升序.cpp
 
 - `stu->name` 等价于 `(*stu).name`。
 - `new Student` 在堆上创建，用完 `delete`，避免内存泄漏。
-- 按题目样例输入 `张三 / 123 / 90.5`，输出为：
+- `id` 使用 `long long`，容纳我的 12 位学号；`score` 保持题目要求的 `float`。对象零初始化，姓名读取限制容量，输入失败时提示并退出。
+- 从仓库根目录编译运行，输入 `张三 123 90.5`（字段用空白分隔），输出为：
+
+```bash
+g++ -std=c++17 -Wall -Wextra -Wpedantic exam1/第二题_Student.cpp -o q2
+./q2
+```
 
 ```text
 姓名：张三
@@ -71,6 +84,11 @@ g++ -std=c++17 -o q1 exam1/第一题_升序.cpp
 - 析构函数在对象离开作用域时自动调用，调用顺序和构造相反。
 - `display()` 输出车辆信息（题目原文写成了“学生信息”，按题意输出车辆）。
 
+```bash
+g++ -std=c++17 -Wall -Wextra -Wpedantic exam1/第三题_Car.cpp -o q3
+./q3
+```
+
 ---
 
 ## 三、考核二：ROS 2 编译与运行
@@ -78,7 +96,7 @@ g++ -std=c++17 -o q1 exam1/第一题_升序.cpp
 官方附件 `src.zip` 解压到工作空间后，包名是 `daohang`，可执行程序名是 `daohang.cpp`。该程序每 0.5 秒打印一句考核文字，用来检查工作空间、colcon 和环境变量有没有配好。需要注意，这份附件没有使用 `rclcpp::Node` 创建 ROS 2 节点，因此它是由 `ros2 run` 启动的可执行程序，不会出现在 `ros2 node list` 中。
 
 ```bash
-cd ~/nav_ws
+cd exam2  # 从仓库根目录进入；若已在 exam2，不要重复 cd
 source /opt/ros/jazzy/setup.bash
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 source ./install/setup.bash
@@ -116,6 +134,36 @@ git push -u origin main
 ---
 
 ## 五、学习指南
+
+### 当前电脑与学习情况（2026-10-07 核对）
+
+当前实际练习环境是 Windows 下的 WSL Ubuntu 24.04，ROS 2 Jazzy 安装在 `/opt/ros/jazzy`。WSL 与另一台 VMware Ubuntu 虚拟机是独立环境，本记录不代表后者已验证。
+
+| 内容 | 电脑中的实际位置/情况 | 与提交版的关系 |
+| --- | --- | --- |
+| Windows 提交仓库 | `D:\01_个人资料\学习与生活\机甲大师面试\2025-人工智能-杨锦毅-导航组2027考核题` | 本仓库的本地副本 |
+| WSL 手写练习 | `~/rm_nav_practice/01_bubble_sort.cpp`、`02_student_basic.cpp`、`03_student_pointer.cpp`、`04_car_class.cpp` | 练习保留个人输入、数据与输出，不要求逐字相同 |
+| 排序 | 练习为 12 个数；提交为原题 10 个数 | 两者都是相邻比较交换的升序冒泡 |
+| Student | 函数版练习与提交都用 `long long id`、`float score` | 均保留 `input`、`display`、指针及 `->`；基础练习用于学习过程 |
+| Car | 练习用蓝色/褐色；提交用红色/蓝色 | 均有私有成员、构造、析构、`display` 和两个对象 |
+| ROS 练习空间 | `~/nav_ws`，输出“这里是2027导航考核第二题 小杨O” | 个人修改用来验证“改源码→重编译→运行” |
+| ROS 提交空间 | 本仓库 `exam2`，输出原题文字“这里是2027导航考核第二题awa” | 提交版保留附件用途与输出 |
+| 自动加载 | WSL `~/.bashrc` 加载 Jazzy 和 `~/nav_ws/install/setup.bash` | 若运行提交版，构建后再加载本仓库 `exam2/install/setup.bash` |
+
+在 PowerShell 先输入 `wsl`，进入 Bash 后才执行 `source`。当前练习启动方式：
+
+```bash
+cd ~/rm_nav_practice
+g++ -std=c++17 01_bubble_sort.cpp -o /tmp/nav_sort && /tmp/nav_sort
+g++ -std=c++17 03_student_pointer.cpp -o /tmp/nav_student && /tmp/nav_student
+g++ -std=c++17 04_car_class.cpp -o /tmp/nav_car && /tmp/nav_car
+cd ~/nav_ws
+source /opt/ros/jazzy/setup.bash
+source install/setup.bash
+ros2 run daohang daohang.cpp
+```
+
+已手写运行排序、Student 和 Car，并完成 ROS 构建与运行。下一步重点是脱稿解释、独立复现，以及节点通信、launch、YAML。以下是学习计划，不表示这些进阶内容已经掌握。
 
 ### 1. ROS 2 基础与导航
 
